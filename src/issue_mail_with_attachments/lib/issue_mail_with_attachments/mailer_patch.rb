@@ -16,16 +16,6 @@ module IssueMailWithAttachments
     module InstanceMethods
 
       #=========================================================
-      # helper method to set logger level
-      #=========================================================
-      def set_logger_level()
-        prev = nil
-        prev = Rails.logger.level
-        Rails.logger.level = Logger::DEBUG
-        return prev
-      end
-
-      #=========================================================
       # helper method to retrieve plugin setting
       #=========================================================
       def retrieve_plugin_seting(name)
@@ -140,7 +130,6 @@ module IssueMailWithAttachments
       # monkey patch for issue_add method of Mailer class
       #=========================================================
       def issue_add_with_attachments(user, issue)
-        prev_logger_lvl = set_logger_level
         Rails.logger.info "--- def issue_add_with_attachments ------"
         #------------------------------------------------------------
         # call original method
@@ -190,14 +179,12 @@ module IssueMailWithAttachments
             end
           #end
         end
-        Rails.logger.level = prev_logger_lvl if prev_logger_lvl
       end
 
       #=========================================================
       # monkey patch for issue_edit method of Mailer class
       #=========================================================
       def issue_edit_with_attachments(user, journal)
-        prev_logger_lvl = set_logger_level
         Rails.logger.info "--- def issue_edit_with_attachments ------"
         #------------------------------------------------------------
         # call original method
@@ -257,7 +244,6 @@ module IssueMailWithAttachments
             end
           #end
         end
-        Rails.logger.level = prev_logger_lvl if prev_logger_lvl
       end
     end
   end
